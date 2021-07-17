@@ -3,6 +3,7 @@
     --swiper-navigation-size: 1.5rem;
 }
 $swiperButtonClass: 'swiper-button';
+$swiperSlideClass: 'swiper-slide';
 $swiperButtonModifierClass: $swiperButtonClass;
 $swiperButtonPrevClass: 'swiper-button-prev:after';
 $swiperButtonNextClass: 'swiper-button-next:after';
@@ -12,27 +13,15 @@ $swiperButtonNextClass: 'swiper-button-next';
 $swiperButtonDisabledClass: "#{$swiperButtonModifierClass}-disabled";
 
 
-
 .#{$swiperButtonPrevClass},
 .#{$swiperButtonNextClass}
 {
-    position: absolute;
-    top: 70%;
-    width: 3rem;
-    height: 5rem;
-    margin-top: -22px;
-    z-index: 10;
-    cursor: pointer;
-    background-size: 27px 44px;
-    background-position: center;
-    background-repeat: no-repeat;
-    font-weight: 900;
-
     &.#{$swiperButtonDisabledClass}
     {
         opacity: 0;
         cursor: auto;
         pointer-events: none;
+        // padding-right: 15rem;
     }
 }
 /* Arrows */
@@ -41,7 +30,7 @@ $swiperButtonDisabledClass: "#{$swiperButtonModifierClass}-disabled";
     color: gray;
     size: 1rem;
     font-weight: 900;
-    padding: 0 0 0 5rem;
+
 }
 
 .#{$swiperButtonNextClass}
@@ -50,6 +39,5 @@ $swiperButtonDisabledClass: "#{$swiperButtonModifierClass}-disabled";
     color: gray;
     font-size: x-large;
     font-weight: 900;
-    padding: 0 5rem 0 0 ;
 }
 
