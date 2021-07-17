@@ -18,6 +18,8 @@ const Grid = (props) => {
     minWidth,
     // shadow,
     minHeight,
+    backImg,
+    size,
   } = props;
 
   const styles = {
@@ -34,6 +36,8 @@ const Grid = (props) => {
     minWidth: minWidth,
     // shadow: shadow,
     minHeight: minHeight,
+    backImg: backImg,
+    size: size,
   };
 
   return (
@@ -62,6 +66,7 @@ Grid.defaultProps = {
   minHeight: false,
   // shadow: false,
   _onClick: () => {},
+  backImg: '',
 };
 
 const GridBox = styled.div`
@@ -75,6 +80,7 @@ const GridBox = styled.div`
   ${(props) => (props.bg ? `background-color: ${props.bg};` : "")}
   ${(props) => (props.center ? `text-align: ${props.center};` : "")}
   ${(props) => (props.borderBottom ? `border-bottom: ${props.borderBottom};` : "")}
+  ${(props) => (props.backImg ? `background-image: url(${props.backImg}); background-position: center; background-size: cover; width: 18rem; height: 8rem; border-radius: 0.5rem` : "")}
   ${(props) =>
     props.border ? `border-radius: 5px; border: 1px solid #718093;` : ""}
   /* ${(props) => (props.shadow ? `box-shadow: 0.5rem 0.5rem #dcdde1;` : "")} */

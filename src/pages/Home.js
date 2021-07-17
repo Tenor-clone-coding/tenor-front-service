@@ -1,7 +1,17 @@
 import React from "react";
 
+// elements
+import { Grid } from "../elements";
+
+// components
+import ImageSwiper from "../components/Swiper";
+
 const Home = (props) => {
-  return <div>연결 확인</div>;
+  return (
+    <React.Fragment>
+        <ImageSwiper></ImageSwiper>
+    </React.Fragment>
+  );
 };
 
 export default Home;
