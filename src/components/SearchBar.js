@@ -27,6 +27,7 @@ const Container = styled.div`
     box-sizing: border-box;
   }
   justify-content: flex-end;
+  z-index: 1000;
 `;
 
 const Input = styled.input`
