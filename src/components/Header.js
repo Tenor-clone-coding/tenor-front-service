@@ -1,21 +1,51 @@
 import React from "react";
 import styled from "styled-components";
 import MenuIcon from "@material-ui/icons/Menu";
-import PublishIcon from "@material-ui/icons/Publish";
+import logo_basic from "../logo_basic.svg";
+import upload_icon from "../upload_icon.svg";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const Header = (props) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Container>
-      <Span>tenor</Span>
+      <Span>
+        <img src={logo_basic} alt="tenor" />
+      </Span>
       <ButtonWrap>
         <Button>
-          <PublishIcon />
+          <img src={upload_icon} alt="tenor" />
           Upload
         </Button>
-        <Button>Signin</Button>
-        <Button>
+        <Button>Sign in</Button>
+        <Button
+          aria-controls="simple-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
           <MenuIcon fontSize="large" />
         </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </Menu>
       </ButtonWrap>
     </Container>
   );
@@ -37,10 +67,11 @@ const Button = styled.button`
   padding: 0.5em 1em;
   text-transform: uppercase;
   font-weight: 600;
-  border: 1px solid #2e93e6;
+  border: 1px solid #007add;
   background-color: white;
-  color: #2e93e6;
+  color: #007add;
   border-radius: 3px;
+  cursor: pointer;
   &:last-child {
     padding: 0;
     color: black;
@@ -53,8 +84,13 @@ const Button = styled.button`
     display: flex;
     align-items: center;
     padding: 0.5em 1em;
-    background-color: #2e93e6;
+    background-color: #007add;
     color: white;
+  }
+  & img {
+    margin-right: 8px;
+    height: 1em;
+    width: auto;
   }
 `;
 
@@ -66,6 +102,11 @@ const ButtonWrap = styled.div`
 const Span = styled.span`
   font-size: 3rem;
   color: #2e93e6;
+  & img {
+    width: 80px;
+    aspect-ratio: auto 80 / 22;
+    height: 22px;
+  }
 `;
 
 export default Header;
