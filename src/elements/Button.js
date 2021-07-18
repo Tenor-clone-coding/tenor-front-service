@@ -15,6 +15,8 @@ const Button = (props) => {
     size,
     cursor,
     border,
+    bgImg,
+    bgBtnImg,
   } = props;
 
   const styles = {
@@ -28,6 +30,8 @@ const Button = (props) => {
     size: size,
     cursor: cursor,
     border: border,
+    bgImg: bgImg,
+    bgBtnImg: bgBtnImg,
   };
 
   return (
@@ -52,6 +56,8 @@ Button.defaultProps = {
   radius: "",
   cursor: "",
   border: "",
+  bgImg: "",
+  bgBtnImg: "",
 };
 
 const ElButton = styled.button`
@@ -67,7 +73,14 @@ const ElButton = styled.button`
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
   ${(props) => (props.cursor ? `cursor: pointer;` : "")};
   ${(props) => (props.border ? `border: ${props.border}` : "")}
- 
+  ${(props) =>
+    props.bgImg
+      ? `background-image: url(${props.bgImg}); width: 16.3rem; height: 3.9rem; background-position: center; background-size: cover; border-radius: 0.5rem`
+      : ""}
+    ${(props) =>
+    props.bgBtnImg
+      ? `background-image: url(${props.bgBtnImg}); width: 23rem; height: 4.9rem; background-position: center; background-size: cover; border-radius: 0.5rem`
+      : ""}
 `;
 
 export default Button;
