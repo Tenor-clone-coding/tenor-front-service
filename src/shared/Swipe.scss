@@ -21,7 +21,6 @@ $swiperButtonDisabledClass: "#{$swiperButtonModifierClass}-disabled";
         opacity: 0;
         cursor: auto;
         pointer-events: none;
-        // padding-right: 15rem;
     }
 }
 /* Arrows */
@@ -39,5 +38,6 @@ $swiperButtonDisabledClass: "#{$swiperButtonModifierClass}-disabled";
     color: gray;
     font-size: x-large;
     font-weight: 900;
+    right: 2rem;
 }
 

@@ -5,6 +5,7 @@ import logo_basic from "../logo_basic.svg";
 import upload_icon from "../upload_icon.svg";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import { Modal } from "../elements";
 
 const Header = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -17,6 +18,16 @@ const Header = (props) => {
     setAnchorEl(null);
   };
 
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <Container>
       <Span>
@@ -27,7 +38,14 @@ const Header = (props) => {
           <img src={upload_icon} alt="tenor" />
           Upload
         </Button>
-        <Button>Sign in</Button>
+        <>
+          <Button onClick={openModal}>Sign in</Button>
+          {modalVisible && <Modal
+          visible={modalVisible}
+          closable={true}
+          maskClosable={true}
+          onClose={closeModal}></Modal>}
+        </>
         <Button
           aria-controls="simple-menu"
           aria-haspopup="true"

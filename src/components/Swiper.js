@@ -21,17 +21,21 @@ const ImageSwiper = (props) => {
           className="swiper-container"
           spaceBetween={35}
           slidesPerView={5}
+          slidesPerGroup={5}
           navigation
           breakpoints={{ 
             1200: {
               slidesPerView: 5,
+              slidesPerGroup: 5,
               spaceBetween: 35,
             },
             768: {
               slidesPerView: 4,
+              slidesPerGroup: 4,
             },
             0: {
               slidesPerView: 3,
+              slidesPerGroup: 3,
             },
           }}
         >
