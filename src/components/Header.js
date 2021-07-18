@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import MenuIcon from "@material-ui/icons/Menu";
+
 import logo_basic from "../logo_basic.svg";
 import upload_icon from "../upload_icon.svg";
+
+import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
@@ -41,6 +43,9 @@ const Header = (props) => {
           keepMounted
           open={Boolean(anchorEl)}
           onClose={handleClose}
+          style={{
+            transform: "translateY(3em)",
+          }}
         >
           <MenuItem onClick={handleClose}>Profile</MenuItem>
           <MenuItem onClick={handleClose}>My account</MenuItem>
@@ -52,10 +57,13 @@ const Header = (props) => {
 };
 
 const Container = styled.header`
-  width: 100vw;
+  max-width: 125rem;
+  width: 100%;
+  /* width: 130rem; */
   border: 0px solid black;
   display: flex;
   justify-content: space-between;
+  margin: 0 auto;
   padding: 5px 5%;
   box-sizing: border-box;
   & * {

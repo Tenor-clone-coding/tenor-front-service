@@ -21,35 +21,44 @@ const SearchBar = () => {
   }, []);
 
   return (
-    <Container>
-      <Span isScrollDown={isScrollDown}>
-        <img src={logo_white} alt="logo_basic" />
-      </Span>
-
-      <Form isScrollDown={isScrollDown}>
-        <Input placeholder="Search for GIFs and Stickers"></Input>
-        <Button>
-          <SearchIcon fontSize="large" />
-        </Button>
-      </Form>
-    </Container>
+    <SearchWrap>
+      <Container>
+        <Span isScrollDown={isScrollDown}>
+          <img src={logo_white} alt="logo_basic" />
+        </Span>
+        <Form isScrollDown={isScrollDown}>
+          <Input placeholder="Search for GIFs and Stickers"></Input>
+          <Button>
+            <SearchIcon fontSize="large" />
+          </Button>
+        </Form>
+      </Container>
+    </SearchWrap>
   );
 };
 
+const SearchWrap = styled.div`
+  width: 100vw;
+  background-color: #4cafff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+`;
+
 const Container = styled.div`
   height: 75px;
-  width: 100vw;
+  max-width: 125rem;
+  width: 100%;
+  margin: 0 auto;
   background-color: #4cafff;
   display: flex;
   box-sizing: border-box;
   padding: 10px 5%;
-  position: sticky;
-  top: 0;
+  position: relative;
   & * {
     box-sizing: border-box;
   }
   justify-content: flex-end;
-  z-index: 1000;
 `;
 
 const Input = styled.input`
@@ -63,7 +72,7 @@ const Input = styled.input`
 
 const Button = styled.button`
   position: absolute;
-  margin-right: 15px;
+  margin-right: 1rem;
   right: 0;
   top: 50%;
   transform: translateY(-50%);

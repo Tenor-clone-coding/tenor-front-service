@@ -10,13 +10,13 @@ import SearchBar from "../components/SearchBar";
 
 function App() {
   return (
-    <AppDiv>
-      <ConnectedRouter history={history}>
-        <Header />
-        <SearchBar />
-        <Route path="/" exact component={Home} />
-      </ConnectedRouter>
-    </AppDiv>
+    <ConnectedRouter history={history}>
+      <Header />
+      <SearchBar />
+
+      <Route path="/" exact component={Home} />
+      <AppDiv></AppDiv>
+    </ConnectedRouter>
   );
 }
 
