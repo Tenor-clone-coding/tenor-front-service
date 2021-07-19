@@ -22,9 +22,21 @@ const Image = (props) => {
     );
   }
 
+  if (shape === "swiper") {
+    return <SwiperImage {...styles} onClick={_onClick}></SwiperImage>;
+  }
+
+  if (shape === "card") {
+    return (
+      <CardImages >
+        <CardImage {...styles} onClick={_onClick}></CardImage>
+      </CardImages>
+    );
+  }
+
   return (
     <React.Fragment>
-      <ImageDefault {...styles} onClick={_onClick}/>
+      <ImageDefault {...styles} onClick={_onClick} />
     </React.Fragment>
   );
 };
@@ -35,7 +47,7 @@ Image.defaultProps = {
   size: 3.6,
   radius: "",
   _onClick: () => {},
-  cursor: '',
+  cursor: "",
 };
 
 const ImageDefault = styled.div`
@@ -60,7 +72,7 @@ const AspectInner = styled.div`
   background-position: center;
   background-size: cover;
   ${(props) => (props.radius ? `border-radius: 0.5rem;` : "")}
-  ${(props) => (props.cursor? `cursor: pointer;`: '')}
+  ${(props) => (props.cursor ? `cursor: pointer;` : "")}
 `;
 
 const ImageCircle = styled.div`
@@ -74,7 +86,35 @@ const ImageCircle = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   margin: 0.4rem;
-  ${(props) => (props.cursor? `cursor: pointer;`: '')};
+  ${(props) => (props.cursor ? `cursor: pointer;` : "")};
+`;
+
+const SwiperImage = styled.div`
+  background-image: url("${(props) => props.src}");
+  background-position: center;
+  background-size: cover;
+  border-radius: 0.5rem;
+  cursor: pointer;
+
+  width: 18rem;
+  height: 10rem;
+`;
+
+const CardImages = styled.div`
+  border-radius: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px 0 rgb(0 0 0 / 5%), 0 2px 4px 0 rgb(0 0 0 / 8%);
+  width: auto;
+  height: 100%;
+  margin: 1rem 0;
+`;
+
+const CardImage = styled.img`
+  src: url("${(props) => props.src}");
+  alt: initial;
+  border-radius: 0.5rem;
+  width: ${(props) => props.size}rem;
+
 `;
 
 export default Image;

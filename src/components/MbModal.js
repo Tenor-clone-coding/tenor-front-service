@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid, Button, Text } from ".";
+import { Grid, Button, Text } from "../elements";
 
 const MbModal = (props) => {
   return (
     <React.Fragment>
       <Contents>
-        <div style={{ textAlign: "center", position: "relative", top: -24 }}>
+        <div style={{ textAlign: "center", position: "relative", top: -24, width: '11rem', margin: '0 auto' }}>
           <img
             src="https://tenor.com/assets/img/tenor-logo-white.svg"
             alt="tenor"

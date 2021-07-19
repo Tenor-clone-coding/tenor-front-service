@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import CloseButton from "./CloseButton";
-import Portal from "./Portal";
-import { Text, Grid, Button, MbModal } from ".";
+import Portal from "../elements/Portal";
+import MbModal from "./MbModal";
+import { Text, Grid, Button, CloseButton } from "../elements";
 
 function Modal({
   className,
@@ -234,4 +234,5 @@ const Contents = styled.div`
       display: none;
   }
 `;
+
 export default Modal;
