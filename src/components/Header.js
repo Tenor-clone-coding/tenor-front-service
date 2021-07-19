@@ -34,7 +34,9 @@ const Header = (props) => {
   return (
     <Container>
       <Span>
-        <img src={logo_basic} alt="tenor" />
+        <img src={logo_basic} alt="tenor" style={{cursor: "pointer"}} onClick={() => {
+          history.replace('/')
+        }}/>
       </Span>
       <ButtonWrap>
         <Button
