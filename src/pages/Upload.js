@@ -1,48 +1,44 @@
 import React from "react";
 import styled from "styled-components";
+import { Grid, Button, Text } from "../elements";
 
-const Upload = () => {
+const Upload = (props) => {
   return (
     <React.Fragment>
-      <Container>
-        <Title>Tenor GIF Maker</Title>
-        <SubTitle>Upload and edit GIFs, share everywhere</SubTitle>
-        <ContentBox>
-          <UploadSection>
+      <Grid
+        padding="4rem 2.7rem"
+        margin="0 auto"
+        height="52rem"
+        bg="#0F83E0"
+        maxWidth="100%"
+      >
+        <Text bold="500" color="#fff" size="3.2rem" margin="0.8rem" center>
+          Tenor GIF Maker
+        </Text>
+        <Text color="#fff" size="2rem" margin="0.5rem" center>
+          Upload and edit GIFs, share everywhere
+        </Text>
+        <Container>
+          <Grid
+            width="100%"
+            padding="2rem"
+            margin="0 auto"
+            height="44rem"
+            bg="#fff"
+            maxWidth="64.5rem"
+            radius="5px"
+          >
             <UploadImageButton>
               <input />
             </UploadImageButton>
-          </UploadSection>
-        </ContentBox>
-      </Container>
+          </Grid>
+        </Container>
+      </Grid>
     </React.Fragment>
   );
 };
 
-const Title = styled.p`
-  color: #fff;
-  font-size: 3.2rem;
-  margin-bottom: 8px;
-`;
-const SubTitle = styled.p`
-  color: #fff;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-`;
-
-const Container = styled.div`
-  height: 100%;
-  text-align: center;
-  box-sizing: border-box;
-  background-color: #057dde;
-`;
-
-const ContentBox = styled.div`
-  text-align: center;
-`;
-
-const UploadSection = styled.div``;
-
+const Container = styled.div``;
 const UploadImageButton = styled.div``;
 
 export default Upload;
