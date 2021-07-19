@@ -26,6 +26,10 @@ const Image = (props) => {
     return <SwiperImage {...styles} onClick={_onClick}></SwiperImage>;
   }
 
+  if (shape === "K") {
+    return <Kakao {...styles} onClick={_onClick}></Kakao>;
+  }
+
   if (shape === "card") {
     return (
       <CardImages >
@@ -115,6 +119,16 @@ const CardImage = styled.img`
   border-radius: 0.5rem;
   width: ${(props) => props.size}rem;
 
+`;
+
+const Kakao = styled.div`
+  width: 2.5rem;
+  height: 2.5rem;
+  background-image: url("${(props) => props.src}");
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+  margin: auto 0.8rem auto 0;
 `;
 
 export default Image;

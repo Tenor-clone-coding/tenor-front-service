@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import Portal from "../elements/Portal";
 import MbModal from "./MbModal";
-import { Text, Grid, Button, CloseButton } from "../elements";
+import { Kakao_auth_url } from "../shared/OAuth";
+import { history } from "../redux/configureStore";
+
+import { Text, Grid, Button, CloseButton, Image } from "../elements";
 
 function Modal({
   className,
@@ -13,6 +16,8 @@ function Modal({
   visible,
   children,
 }) {
+
+
   const onMaskClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose(e);
@@ -99,7 +104,19 @@ function Modal({
                       Search, share and upload your own GIFs to your Tenor
                       account and access them anywhere, anytime.
                     </Text>
-                    <Button bgImg="https://tenor.com/assets/img/auth/google/2x/btn_google_signin_dark_normal_web@2x.png"></Button>
+                    <Button bg="#007add" radius="0.5rem" _onClick={()=>{window.location.href=`${Kakao_auth_url}`}} cursor='t'>
+                      <Grid is_flex="t">
+                        <Image
+                          shape="K"
+                          src={
+                            "https://cdn.jootc.com/wp-content/uploads/2018/12/kakaotalk-logo-card-2018.png"
+                          }
+                        />
+                        <Text color="white" margin="1rem 0.5rem">
+                          Sign in with kakao
+                        </Text>
+                      </Grid>
+                    </Button>
                     <span
                       style={{
                         fontSize: "1.3rem",
@@ -107,8 +124,11 @@ function Modal({
                         margin: "2rem 0 3rem",
                       }}
                     >
-                      Already have an account?{" "}
-                      <span onClick={() => {}} style={{ color: "#007add" }}>
+                      Already have an account?
+                      <span onClick={() => {
+                        window.location.href=`${Kakao_auth_url}`
+                        close();
+                      }} style={{ color: "#007add", cursor: 'pointer' }}>
                         Sign in
                       </span>
                     </span>
@@ -131,7 +151,7 @@ function Modal({
                   </Text>
                 </Grid>
               </Contents>
-              <MbModal/>
+              <MbModal onClose={onClose}/>
             </div>
           </ModalShadow>
         </ModalInner>
@@ -231,7 +251,7 @@ const Contents = styled.div`
   padding: 0 5rem 5rem;
 
   @media (max-width: 840px) {
-      display: none;
+    display: none;
   }
 `;
 

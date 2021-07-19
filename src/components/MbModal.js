@@ -1,12 +1,29 @@
 import React from "react";
+import { history } from "../redux/configureStore";
+import { Kakao_auth_url } from "../shared/OAuth";
+
 import styled from "styled-components";
-import { Grid, Button, Text } from "../elements";
+import { Grid, Button, Text, Image } from "../elements";
 
 const MbModal = (props) => {
+  const close = (e) => {
+    if (props.onClose) {
+      props.onClose(e);
+    }
+  };
+
   return (
     <React.Fragment>
       <Contents>
-        <div style={{ textAlign: "center", position: "relative", top: -24, width: '11rem', margin: '0 auto' }}>
+        <div
+          style={{
+            textAlign: "center",
+            position: "relative",
+            top: -24,
+            width: "11rem",
+            margin: "0 auto",
+          }}
+        >
           <img
             src="https://tenor.com/assets/img/tenor-logo-white.svg"
             alt="tenor"
@@ -44,7 +61,26 @@ const MbModal = (props) => {
                 Search, share and upload your own GIFs to your Tenor account and
                 access them anywhere, anytime.
               </Text>
-              <Button bgBtnImg="https://tenor.com/assets/img/auth/google/2x/btn_google_signin_dark_normal_web@2x.png"></Button>
+              <Button
+                bg="#007add"
+                radius="0.5rem"
+                cursor="t"
+                _onClick={() => {
+                  window.location.href = `${Kakao_auth_url}`;
+                }}
+              >
+                <Grid is_flex="t">
+                  <Image
+                    shape="K"
+                    src={
+                      "https://cdn.jootc.com/wp-content/uploads/2018/12/kakaotalk-logo-card-2018.png"
+                    }
+                  />
+                  <Text color="white" margin="1.5rem 1.5rem" size="2rem">
+                    Sign in with kakao
+                  </Text>
+                </Grid>
+              </Button>
               <span
                 style={{
                   fontSize: "1.8rem",
@@ -54,7 +90,13 @@ const MbModal = (props) => {
                 }}
               >
                 Already have an account?{" "}
-                <span onClick={() => {}} style={{ color: "#007add" }}>
+                <span
+                  onClick={(_onClick) => {
+                    window.location.href=`${Kakao_auth_url}`
+                    close();
+                  }}
+                  style={{ color: "#007add", cursor: "pointer" }}
+                >
                   Sign in
                 </span>
               </span>
@@ -87,6 +129,7 @@ const MbModal = (props) => {
     </React.Fragment>
   );
 };
+
 
 const Contents = styled.div`
   display: "flex";
