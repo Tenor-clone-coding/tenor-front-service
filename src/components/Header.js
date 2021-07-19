@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import "./styles.css";
+import { useDetectOutsideClick } from "../elements/useDetectOutsideClick";
 
 import logo_basic from "../logo_basic.svg";
 import upload_icon from "../upload_icon.svg";
@@ -11,6 +13,7 @@ import { Modal } from "../elements";
 import { withRouter } from "react-router-dom";
 
 const Header = (props) => {
+  // header 반응형
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -21,6 +24,7 @@ const Header = (props) => {
     setAnchorEl(null);
   };
 
+  // login 모달
   const [modalVisible, setModalVisible] = React.useState(false);
 
   const openModal = () => {
@@ -30,6 +34,11 @@ const Header = (props) => {
   const closeModal = () => {
     setModalVisible(false);
   };
+
+  // 메뉴 드롭다운
+  const dropdownRef = React.useRef(null);
+  const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
+  const onClick = () => setIsActive(!isActive);
 
   return (
     <Container>
@@ -106,13 +115,104 @@ const Header = (props) => {
             ></Modal>
           )}
         </>
-        <Button
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <MenuIcon fontSize="large" />
-        </Button>
+        <div className="menu-container">
+          <button
+            style={{
+              backgroundColor: "#fff",
+              border: "none",
+              marginLeft: "0.5rem",
+            }}
+            onClick={onClick}
+          >
+            <MenuIcon fontSize="large" />
+          </button>
+
+          <nav
+            ref={dropdownRef}
+            className={`menu ${isActive ? "active" : "inactive"}`}
+          >
+            <Grid maxWidth="110rem" is_flex="t" padding="5rem 9rem">
+              <Div>
+                <Text size="2rem" bold="600" margin='0'>
+                  PRODUCTS
+                </Text>
+                <ul style={{listStyle: "none", padding: 0}}>
+                  <li>
+                    <Text size='1.6rem'>GIF keyboard</Text>
+                  </li>
+                  <li>
+                    <Text size='1.6rem'>Android</Text>
+                  </li>
+                  <li>
+                    <Text size='1.6rem'>Mac</Text>
+                  </li>
+                  <li>
+                    <Text size='1.6rem'>Content Partners</Text>
+                  </li>
+                </ul>
+              </Div>
+              <Div>
+                <Text size="2rem" bold="600" margin='0'>
+                  EXPLORE
+                </Text>
+                <ul style={{listStyle: "none", padding: 0}}>
+                  <li>
+                    <Text size='1.6rem'>Reaction GIFs</Text>
+                  </li>
+                  <li>
+                    <Text size='1.6rem'>Explore GIFs</Text>
+                  </li>
+                </ul>
+              </Div>
+              <Div>
+                <Text size="2rem" bold="600" margin='0'>
+                  COMPANY
+                </Text>
+                <ul style={{listStyle: "none", padding: 0}}>
+                  <li>
+                    <Text size='1.6rem'>About</Text>
+                  </li>
+                  <li>
+                    <Text size='1.6rem'>Press</Text>
+                  </li>
+                  <li>
+                    <Text size='1.6rem'>Blog</Text>
+                  </li>
+                  <li>
+                    <Text size='1.6rem'>FAQ</Text>
+                  </li>
+                  <li>
+                    <Text size='1.6rem'>Terms and Privacy</Text>
+                  </li>
+                  <li>
+                    <Text size='1.6rem'>Website Licenses</Text>
+                  </li>
+                  <li>
+                    <Text size='1.6rem'>Contact Us</Text>
+                  </li>
+                </ul>
+              </Div>
+              <Div>
+                <Text size="2rem" bold="600" margin='0'>
+                  API
+                </Text>
+                <ul style={{listStyle: "none", padding: 0}}>
+                  <li>
+                    <Text size='1.6rem'>Tenor GIF API</Text>
+                  </li>
+                  <li>
+                    <Text size='1.6rem'>GIF API Documentation</Text>
+                  </li>
+                  <li>
+                    <Text size='1.6rem'>Unity AR SDK</Text>
+                  </li>
+                </ul>
+              </Div>
+            </Grid>
+          </nav>
+        </div>
+
+        {/*         
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}
@@ -120,13 +220,14 @@ const Header = (props) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
           style={{
-            transform: "translateY(3em)",
+            transform: "translateX(-50%)",
           }}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
+          <Grid></Grid>
+          <Grid _onClick={handleClose}>Profile</Grid>
+          <Grid _onClick={handleClose}>My account</Grid>
+          <Grid _onClick={handleClose}>Logout</Grid>
+        </Menu> */}
       </ButtonWrap>
     </Container>
   );
@@ -193,5 +294,13 @@ const Span = styled.span`
   }
 `;
 
-// export default Header;
-export default withRouter(Header);
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 2rem;
+  width: fit-content;
+`;
+
+export default Header;
