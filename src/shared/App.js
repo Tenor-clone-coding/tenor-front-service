@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { Home } from "../pages";
+import { Home, Upload } from "../pages";
 import styled from "styled-components";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
@@ -12,9 +12,8 @@ function App() {
   return (
     <ConnectedRouter history={history}>
       <Header />
-      <SearchBar />
-
       <Route path="/" exact component={Home} />
+      <Route path="/upload" exact component={Upload} />
       <AppDiv></AppDiv>
     </ConnectedRouter>
   );

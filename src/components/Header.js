@@ -8,6 +8,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Modal } from "../elements";
+import { withRouter } from "react-router-dom";
 
 const Header = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -36,17 +37,74 @@ const Header = (props) => {
         <img src={logo_basic} alt="tenor" />
       </Span>
       <ButtonWrap>
-        <Button>
+        <Button
+          onClick={() => {
+            props.history.push("/upload");
+          }}
+        >
+          <img src={upload_icon} alt="tenor" display="" />
+          Upload
+        </Button>
+        <>
+          <Button onClick={openModal}>Sign in</Button>
+          {modalVisible && (
+            <Modal
+              visible={modalVisible}
+              closable={true}
+              maskClosable={true}
+              onClose={closeModal}
+            ></Modal>
+          )}
+        </>
+        <Button
+          aria-controls="simple-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <MenuIcon fontSize="large" />
+        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+          style={{
+            transform: "translateY(3em)",
+          }}
+        >
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </Menu>
+      </ButtonWrap>
+    </Container>
+  );
+
+  return (
+    <Container>
+      <Span>
+        <img src={logo_basic} alt="tenor" />
+      </Span>
+      <ButtonWrap>
+        <Button
+          onClick={() => {
+            props.history.push("/upload");
+          }}
+        >
           <img src={upload_icon} alt="tenor" />
           Upload
         </Button>
         <>
           <Button onClick={openModal}>Sign in</Button>
-          {modalVisible && <Modal
-          visible={modalVisible}
-          closable={true}
-          maskClosable={true}
-          onClose={closeModal}></Modal>}
+          {modalVisible && (
+            <Modal
+              visible={modalVisible}
+              closable={true}
+              maskClosable={true}
+              onClose={closeModal}
+            ></Modal>
+          )}
         </>
         <Button
           aria-controls="simple-menu"
@@ -135,4 +193,5 @@ const Span = styled.span`
   }
 `;
 
-export default Header;
+// export default Header;
+export default withRouter(Header);
