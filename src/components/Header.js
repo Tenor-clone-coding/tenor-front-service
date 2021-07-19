@@ -2,27 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import "./styles.css";
 import { useDetectOutsideClick } from "../elements/useDetectOutsideClick";
+import { history } from "../redux/configureStore";
 
 import logo_basic from "../logo_basic.svg";
 import upload_icon from "../upload_icon.svg";
 
 import MenuIcon from "@material-ui/icons/Menu";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import { Modal } from "../elements";
-import { withRouter } from "react-router-dom";
+import Modal from './Modal';
+import { Grid, Text, } from "../elements";
 
 const Header = (props) => {
-  // header 반응형
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   // login 모달
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -40,55 +29,7 @@ const Header = (props) => {
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const onClick = () => setIsActive(!isActive);
 
-  return (
-    <Container>
-      <Span>
-        <img src={logo_basic} alt="tenor" />
-      </Span>
-      <ButtonWrap>
-        <Button
-          onClick={() => {
-            props.history.push("/upload");
-          }}
-        >
-          <img src={upload_icon} alt="tenor" display="" />
-          Upload
-        </Button>
-        <>
-          <Button onClick={openModal}>Sign in</Button>
-          {modalVisible && (
-            <Modal
-              visible={modalVisible}
-              closable={true}
-              maskClosable={true}
-              onClose={closeModal}
-            ></Modal>
-          )}
-        </>
-        <Button
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <MenuIcon fontSize="large" />
-        </Button>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          style={{
-            transform: "translateY(3em)",
-          }}
-        >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
-      </ButtonWrap>
-    </Container>
-  );
+  
 
   return (
     <Container>
@@ -98,7 +39,7 @@ const Header = (props) => {
       <ButtonWrap>
         <Button
           onClick={() => {
-            props.history.push("/upload");
+            history.push("/upload");
           }}
         >
           <img src={upload_icon} alt="tenor" />
@@ -211,23 +152,6 @@ const Header = (props) => {
             </Grid>
           </nav>
         </div>
-
-        {/*         
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          style={{
-            transform: "translateX(-50%)",
-          }}
-        >
-          <Grid></Grid>
-          <Grid _onClick={handleClose}>Profile</Grid>
-          <Grid _onClick={handleClose}>My account</Grid>
-          <Grid _onClick={handleClose}>Logout</Grid>
-        </Menu> */}
       </ButtonWrap>
     </Container>
   );

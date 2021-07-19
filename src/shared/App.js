@@ -6,7 +6,6 @@ import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configureStore";
 import Header from "../components/Header";
-import SearchBar from "../components/SearchBar";
 
 function App() {
   return (
