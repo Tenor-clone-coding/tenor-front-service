@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { Home, Upload } from "../pages";
+import { Home, Upload, KakaoRedirection } from "../pages";
 import styled from "styled-components";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
@@ -13,6 +13,7 @@ function App() {
       <Header />
       <Route path="/" exact component={Home} />
       <Route path="/upload" exact component={Upload} />
+      <Route path="/user/kakao/callback" exact component={KakaoRedirection} />
       <AppDiv></AppDiv>
     </ConnectedRouter>
   );
