@@ -21,7 +21,7 @@ function App() {
 
 // 스크롤+헤더 테스트 삼아 넣어 둔 거라 삭제해도 됩니다
 const AppDiv = styled.div`
-  height: 200vh;
+  height: 100vh;
 `;
 
 export default App;
