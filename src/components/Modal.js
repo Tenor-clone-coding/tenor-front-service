@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import Portal from "../elements/Portal";
 import MbModal from "./MbModal";
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
 import { Kakao_auth_url } from "../shared/OAuth";
 import { history } from "../redux/configureStore";
 
@@ -17,6 +19,7 @@ function Modal({
   children,
 }) {
 
+  const dispatch = useDispatch();
 
   const onMaskClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -126,6 +129,7 @@ function Modal({
                     >
                       Already have an account?
                       <span onClick={() => {
+                        // dispatch(userActions.loginAX())
                         window.location.href=`${Kakao_auth_url}`
                         close();
                       }} style={{ color: "#007add", cursor: 'pointer' }}>
