@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Grid, Text } from "../elements";
+import { Button, Grid, Text } from "../elements";
 import { useDropzone } from "react-dropzone";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import sharedImage from "../elements/image/sharedImage.gif";
 
 const Upload = (props) => {
+  const [title, setContents] = React.useState("");
+
+  const changeContents = (e) => {
+    setContents(e.target.value);
+  };
+
   const [files, setFiles] = useState([]);
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: "image/*",
+    accept: "image/gif",
     onDrop: (acceptedFiles) => {
+      // acceptedFiles typeof 확인후 file object 일때 서버로 여기서 넘겨주기
+      // dispatch(upload 미들웨어 달기)
+      console.log(acceptedFiles);
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -21,18 +30,47 @@ const Upload = (props) => {
     },
   });
 
+  const is_files = () => {
+    if (files.length !== 0) {
+      console.log(files);
+      return true;
+    } else console.log(files);
+    return false;
+  };
+
   const images = files.map((file) => (
     <div key={file.name}>
       <div>
         <img
           src={file.preview}
-          style={{ width: "250px" }}
+          style={{ width: "26rem", height: "26rem", objectFit: "cover" }}
           alt="preview"
-          center
+          center="center"
         />
       </div>
     </div>
   ));
+
+  // 새 게시글
+  const addPost = () => {
+    if (files.length === 0) {
+      window.alert("이미지를 선택해주세요");
+      return;
+    }
+
+    if (! title){
+      window.alert("사진의 제목을 입력해주세요");
+      return;
+    }
+
+    let post = {
+      title: title,
+      image: files[0],
+    }
+    console.log(post);
+    window.alert('업로드')
+    // dispatch(postActions.addPostAX(post));
+  };
 
   return (
     <React.Fragment>
@@ -43,10 +81,16 @@ const Upload = (props) => {
         bg="#0F83E0"
         maxWidth="100%"
       >
-        <Text bold="500" color="#fff" size="3.2rem" margin="0.8rem" center>
+        <Text
+          bold="500"
+          color="#fff"
+          size="3.2rem"
+          margin="0.8rem"
+          center="center"
+        >
           Tenor GIF Maker
         </Text>
-        <Text color="#fff" size="2rem" margin="0 0 3.2rem" center>
+        <Text color="#fff" size="2rem" margin="0 0 3.2rem" center="center">
           Upload and edit GIFs, share everywhere
         </Text>
 
@@ -59,45 +103,89 @@ const Upload = (props) => {
           radius="5px"
         >
           <Grid>
-            <div className="DragDrop">
-              <DragnDrop {...getRootProps()}>
-                <div>{images}</div>
-                <input {...getInputProps()} />
-                <video
-                  src="https://tenor.com/assets/img/gifmaker/folder-animation.mp4"
-                  loop
-                  style={{ width: "14rem", margin: "0 0 3rem 0" }}
-                ></video>
-                <br />
-                <UploadBtn>UPLOAD FROM CAMERA ROLL</UploadBtn>
-              </DragnDrop>
-            </div>
-            <Text size="1.25rem" color="#2B2B2B" center>
-              <InfoOutlinedIcon
-                style={{
-                  position: "absolute",
-                  color: "#0276D6",
-                  fontSize: "large",
-                  margin: "-2 10 10 -20",
-                }}
-              />
-              Upload up to 10 GIFs, stickers, MP4s, JPEGs, or PNGs
-            </Text>
-            <InputBox placeholder="Paste a GIF, JPEG, or PNG URL"></InputBox>
-            <Text
-              size="1.1rem"
-              color="#9b9b9b"
-              textDecoration="underline"
-              center
-            >
-              Terms and Privacy
-            </Text>
+            {is_files() ? (
+              <>
+                <div className="DragDrop">
+                  <DragnDrop {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <div>{images}</div>
+                    <br />
+                    <UploadBtn>UPLOAD FROM CAMERA ROLL</UploadBtn>
+                  </DragnDrop>
+                  <Grid is_flex="t" margin="1rem auto 0">
+                    <Grid margin="1rem auto" center="center">
+                      <InputBox
+                        placeholder="Add Title"
+                        value={title}
+                        onChange={changeContents}
+                        style={{ width: "37rem" }}
+                      ></InputBox>
+                    </Grid>
+                    <Grid center="center" margin="1rem auto">
+                      <Button
+                        bg="#48abfb"
+                        padding="1rem"
+                        radius="30px"
+                        width="15rem"
+                        height="5rem"
+                        _onClick={addPost}
+                      >
+                        <Text color="#fff" margin="0" size="1.8rem" bold="600">
+                          UPLOAD
+                        </Text>
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="DragDrop">
+                  <DragnDrop {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <video
+                      src="https://tenor.com/assets/img/gifmaker/folder-animation.mp4"
+                      loop
+                      style={{ width: "14rem", margin: "0 0 3rem 0" }}
+                    ></video>
+                    <br />
+                    <UploadBtn>UPLOAD FROM CAMERA ROLL</UploadBtn>
+                  </DragnDrop>
+                  <Text size="1.25rem" color="#2B2B2B" center="center">
+                    <InfoOutlinedIcon
+                      style={{
+                        position: "absolute",
+                        color: "#0276D6",
+                        fontSize: "large",
+                        margin: "-2 10 10 -20",
+                      }}
+                    />
+                    Upload up to 10 GIFs, stickers, MP4s, JPEGs, or PNGs
+                  </Text>
+                  <InputBox placeholder="Paste a GIF, JPEG, or PNG URL"></InputBox>
+                  <Text
+                    size="1.1rem"
+                    color="#9b9b9b"
+                    textDecoration="underline"
+                    center="center"
+                  >
+                    Terms and Privacy
+                  </Text>
+                </div>
+              </>
+            )}
           </Grid>
         </Grid>
       </Grid>
 
       <Grid padding="9rem 0 9rem">
-        <Text bold="500" color="black" size="3.2rem" margin="0.8rem" center>
+        <Text
+          bold="500"
+          color="black"
+          size="3.2rem"
+          margin="0.8rem"
+          center="center"
+        >
           Getting started on Tenor
         </Text>
         <Content>
@@ -177,12 +265,13 @@ const Upload = (props) => {
         <SharedItem>
           <Text bold="500" color="black" size="3.2rem">
             Share anywhere
-            <Text bold="250" color="#4A4A4A" size="1.8rem">
-              Access GIFs you uploaded anytime from Tenor products including
-              Tenor website and <a href="https://NotFound">GIF Keyboard</a>.
-              Tenor also powers GIF search for Gboard, Facebook, Twitter, Line,
-              WhatsApp, and more!
-            </Text>
+          </Text>
+
+          <Text bold="250" color="#4A4A4A" size="1.8rem">
+            Access GIFs you uploaded anytime from Tenor products including Tenor
+            website and <a href="https://NotFound">GIF Keyboard</a>. Tenor also
+            powers GIF search for Gboard, Facebook, Twitter, Line, WhatsApp, and
+            more!
           </Text>
           <Grid>
             <Grid is_flex>
