@@ -8,11 +8,10 @@ import logo_basic from "../logo_basic.svg";
 import upload_icon from "../upload_icon.svg";
 
 import MenuIcon from "@material-ui/icons/Menu";
-import Modal from './Modal';
-import { Grid, Text, } from "../elements";
+import Modal from "./Modal";
+import { Grid, Text } from "../elements";
 
 const Header = (props) => {
-
   // login 모달
   const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -29,24 +28,27 @@ const Header = (props) => {
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const onClick = () => setIsActive(!isActive);
 
-  
-
   return (
     <Container>
       <Span>
-        <img src={logo_basic} alt="tenor" style={{cursor: "pointer"}} onClick={() => {
-          history.replace('/')
-        }}/>
+        <img
+          src={logo_basic}
+          alt="tenor"
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            history.replace("/");
+          }}
+        />
       </Span>
       <ButtonWrap>
-        <Button
+        <UploadBtn
           onClick={() => {
             history.push("/upload");
           }}
         >
           <img src={upload_icon} alt="tenor" />
           Upload
-        </Button>
+        </UploadBtn>
         <>
           <Button onClick={openModal}>Sign in</Button>
           {modalVisible && (
@@ -76,78 +78,78 @@ const Header = (props) => {
           >
             <Grid maxWidth="110rem" is_flex="t" padding="5rem 9rem">
               <Div>
-                <Text size="2rem" bold="600" margin='0'>
+                <Text size="2rem" bold="600" margin="0">
                   PRODUCTS
                 </Text>
-                <ul style={{listStyle: "none", padding: 0}}>
+                <ul style={{ listStyle: "none", padding: 0 }}>
                   <li>
-                    <Text size='1.6rem'>GIF keyboard</Text>
+                    <Text size="1.6rem">GIF keyboard</Text>
                   </li>
                   <li>
-                    <Text size='1.6rem'>Android</Text>
+                    <Text size="1.6rem">Android</Text>
                   </li>
                   <li>
-                    <Text size='1.6rem'>Mac</Text>
+                    <Text size="1.6rem">Mac</Text>
                   </li>
                   <li>
-                    <Text size='1.6rem'>Content Partners</Text>
+                    <Text size="1.6rem">Content Partners</Text>
                   </li>
                 </ul>
               </Div>
               <Div>
-                <Text size="2rem" bold="600" margin='0'>
+                <Text size="2rem" bold="600" margin="0">
                   EXPLORE
                 </Text>
-                <ul style={{listStyle: "none", padding: 0}}>
+                <ul style={{ listStyle: "none", padding: 0 }}>
                   <li>
-                    <Text size='1.6rem'>Reaction GIFs</Text>
+                    <Text size="1.6rem">Reaction GIFs</Text>
                   </li>
                   <li>
-                    <Text size='1.6rem'>Explore GIFs</Text>
+                    <Text size="1.6rem">Explore GIFs</Text>
                   </li>
                 </ul>
               </Div>
               <Div>
-                <Text size="2rem" bold="600" margin='0'>
+                <Text size="2rem" bold="600" margin="0">
                   COMPANY
                 </Text>
-                <ul style={{listStyle: "none", padding: 0}}>
+                <ul style={{ listStyle: "none", padding: 0 }}>
                   <li>
-                    <Text size='1.6rem'>About</Text>
+                    <Text size="1.6rem">About</Text>
                   </li>
                   <li>
-                    <Text size='1.6rem'>Press</Text>
+                    <Text size="1.6rem">Press</Text>
                   </li>
                   <li>
-                    <Text size='1.6rem'>Blog</Text>
+                    <Text size="1.6rem">Blog</Text>
                   </li>
                   <li>
-                    <Text size='1.6rem'>FAQ</Text>
+                    <Text size="1.6rem">FAQ</Text>
                   </li>
                   <li>
-                    <Text size='1.6rem'>Terms and Privacy</Text>
+                    <Text size="1.6rem">Terms and Privacy</Text>
                   </li>
                   <li>
-                    <Text size='1.6rem'>Website Licenses</Text>
+                    <Text size="1.6rem">Website Licenses</Text>
                   </li>
                   <li>
-                    <Text size='1.6rem'>Contact Us</Text>
+                    <Text size="1.6rem">Contact Us</Text>
                   </li>
                 </ul>
               </Div>
               <Div>
-                <Text size="2rem" bold="600" margin='0'>
+                <Text size="2rem" bold="600" margin="0">
                   API
                 </Text>
-                <ul style={{listStyle: "none", padding: 0}}>
+                <ul style={{ listStyle: "none", padding: 0 }}>
                   <li>
-                    <Text size='1.6rem'>Tenor GIF API</Text>
+                    <Text size="1.6rem">Tenor GIF API</Text>
                   </li>
                   <li>
-                    <Text size='1.6rem'>GIF API Documentation</Text>
+                    <Text size="1.6rem">GIF API Documentation</Text>
                   </li>
                   <li>
-                    <Text size='1.6rem'>Unity AR SDK</Text>
+                    <Text size="1.6rem">Unity AR SDK</Text>
                   </li>
                 </ul>
               </Div>
@@ -205,6 +207,23 @@ const Button = styled.button`
   }
 `;
 
+const UploadBtn = styled.button`
+  padding: 0.5em 1em;
+  display: flex;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: 1px solid #007add;
+  background-color: white;
+  color: #007add;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.5em 1em;
+  background-color: #007add;
+  color: white;
+`;
+
 const ButtonWrap = styled.div`
   display: flex;
   align-items: center;
@@ -219,7 +238,6 @@ const Span = styled.span`
     height: 22px;
   }
 `;
-
 
 const Div = styled.div`
   display: flex;
