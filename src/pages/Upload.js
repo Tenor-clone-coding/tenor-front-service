@@ -4,8 +4,9 @@ import { Button, Grid, Text } from "../elements";
 import { useDropzone } from "react-dropzone";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import sharedImage from "../elements/image/sharedImage.gif";
+import folderAnimation from "../elements/image/folderAnimation.gif";
 import { useDispatch } from "react-redux";
-import { actionCreators as postActions  } from "../redux/modules/post";
+import { actionCreators as postActions } from "../redux/modules/post";
 
 const Upload = (props) => {
   const dispatch = useDispatch();
@@ -61,7 +62,7 @@ const Upload = (props) => {
       return;
     }
 
-    if (! title){
+    if (!title) {
       window.alert("사진의 제목을 입력해주세요");
       return;
     }
@@ -69,9 +70,9 @@ const Upload = (props) => {
     let post = {
       title: title,
       image: files[0],
-    }
+    };
     console.log(post);
-    window.alert('업로드')
+    window.alert("업로드");
     dispatch(postActions.addPostAX(post));
   };
 
@@ -146,11 +147,11 @@ const Upload = (props) => {
                 <div className="DragDrop">
                   <DragnDrop {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <video
-                      src="https://tenor.com/assets/img/gifmaker/folder-animation.mp4"
-                      loop
+                    <img
+                      src={folderAnimation}
+                      alt="tenor"
                       style={{ width: "14rem", margin: "0 0 3rem 0" }}
-                    ></video>
+                    />
                     <br />
                     <UploadBtn>UPLOAD FROM CAMERA ROLL</UploadBtn>
                   </DragnDrop>
