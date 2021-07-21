@@ -4,8 +4,11 @@ import { Button, Grid, Text } from "../elements";
 import { useDropzone } from "react-dropzone";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import sharedImage from "../elements/image/sharedImage.gif";
+import { useDispatch } from "react-redux";
+import { actionCreators as postActions  } from "../redux/modules/post";
 
 const Upload = (props) => {
+  const dispatch = useDispatch();
   const [title, setContents] = React.useState("");
 
   const changeContents = (e) => {
@@ -69,7 +72,7 @@ const Upload = (props) => {
     }
     console.log(post);
     window.alert('업로드')
-    // dispatch(postActions.addPostAX(post));
+    dispatch(postActions.addPostAX(post));
   };
 
   return (
