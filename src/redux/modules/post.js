@@ -47,6 +47,7 @@ const addPostAX = (post) => {
 
     axios
       .post(`http://34.64.109.170:8080/api/photos`, form, { headers: headers })
+
       .then(function (res) {
         console.log(res);
         const post = {
@@ -77,7 +78,9 @@ const getPostAX = () => {
     };
 
     axios
-      .get("http://34.64.109.170:8080/api/photos")
+      .get("http://localhost:4000/photos")
+      // .get("http://34.64.109.170:8080/api/photos")
+      
 
       .then((res) => {
         console.log(res);

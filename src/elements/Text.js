@@ -12,6 +12,7 @@ const Text = (props) => {
     cursor,
     width,
     center,
+    deco,
   } = props;
 
   const styles = {
@@ -22,6 +23,7 @@ const Text = (props) => {
     center: center,
     width: width,
     cursor,
+    deco,
   };
   return (
     <P {...styles} onClick={_onClick}>
@@ -41,6 +43,7 @@ Text.defaultProps = {
   width: "",
   _onClick: () => {},
   center: "",
+  deco: '',
 };
 
 const P = styled.p`
@@ -52,6 +55,8 @@ const P = styled.p`
   vertical-align: middle;
   ${(props) => (props.cursor ? `cursor: pointer;` : "")};
   ${(props) => (props.center ? `text-align: center;` : "")};
+  ${(props) => (props.deco ? `text-decoration: white underline; text-underline-position: under; text-decoration-thickness: 0.4rem;` : "")};
+
 `;
 
 export default Text;

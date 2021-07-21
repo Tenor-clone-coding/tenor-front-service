@@ -15,29 +15,29 @@ const Flex4 = (props) => {
     <GridWrap>
       <Columns>
         {arr1.map((post) => (
-          <GifList key={post.id}>
-            <Image shape="card" src={post.image_url} size='23'></Image>
+          <GifList key={post.post_id}>
+            <Image shape="card" src={post.image_url} size='23' title={post.title}></Image>
           </GifList>
         ))}
       </Columns>
       <Columns>
         {arr2.map((post) => (
-          <GifList key={post.id}>
-            <Image shape="card" src={post.image_url} size='23'></Image>
+          <GifList key={post.post_id}>
+            <Image shape="card" src={post.image_url} size='23' title={post.title}></Image>
           </GifList>
         ))}
       </Columns>
       <Columns>
         {arr3.map((post) => (
-          <GifList key={post.id}>
-            <Image shape="card" src={post.image_url} size='23'></Image>
+          <GifList key={post.post_id}>
+            <Image shape="card" src={post.image_url} size='23' title={post.title}></Image>
           </GifList>
         ))}
       </Columns>
       <Columns>
         {arr4.map((post) => (
-          <GifList key={post.id}>
-            <Image shape="card" src={post.image_url} size='23'></Image>
+          <GifList key={post.post_id}>
+            <Image shape="card" src={post.image_url} size='23' title={post.title}></Image>
           </GifList>
         ))}
       </Columns>
@@ -69,6 +69,7 @@ const Columns = styled.div`
 
 const GifList = styled.div`
   margin: 0 auto;
+  height: 100%;
 `;
 
 export default Flex4;

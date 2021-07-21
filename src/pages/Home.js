@@ -19,10 +19,12 @@ const Home = (props) => {
   return (
     <React.Fragment>
       <SearchBar />
-      <ImageSwiper></ImageSwiper>
-      <TrandingPage></TrandingPage>
+        <ImageSwiper></ImageSwiper>
+        <TrandingPage></TrandingPage>
     </React.Fragment>
   );
 };
+
+
 
 export default Home;

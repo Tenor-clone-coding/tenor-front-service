@@ -1,7 +1,8 @@
 import React from "react";
+import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
-import { Grid, Text } from "../elements/index";
+import { Grid, Text, Image } from "../elements/index";
 
 import Flex4 from "./Flex4";
 import Flex3 from "./Flex3";
@@ -12,27 +13,27 @@ const TrandingPage = (props) => {
   const post_list = useSelector((state) => state.post.list);
 
   React.useEffect(() => {
-    if (post_list.length === 0){
+    if (post_list.length === 0) {
       dispatch(postActions.getPostAX());
       console.log(post_list);
     }
   }, []);
 
   return (
-    <Grid margin="3rem auto">
-      <Grid maxWidth="114rem" margin="3rem auto">
+    <Grid margin="0 auto">
+      <Grid margin="3rem auto" maxWidth="114rem">
         <Text width="30rem" size="2.5rem" bold="800" margin="0 2rem 3rem">
           Trending GIFs
         </Text>
-
           {/* props로 post 정보 넘겨주기 */}
-          <Flex4 {...props } post_list={post_list}></Flex4>
+          <Flex4 {...props} post_list={post_list}></Flex4>
           <Flex3 {...props} post_list={post_list}></Flex3>
           <Flex2 {...props} post_list={post_list}></Flex2>
       </Grid>
     </Grid>
   );
 };
+
 
 TrandingPage.defaultProps = {
   data: [
