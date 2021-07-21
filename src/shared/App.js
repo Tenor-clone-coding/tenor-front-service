@@ -1,13 +1,27 @@
 import "./App.css";
 import React from "react";
-import { Home, Upload, KakaoRedirection } from "../pages";
 import styled from "styled-components";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configureStore";
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+
 import Header from "../components/Header";
+import { Home, Upload, KakaoRedirection } from "../pages";
+import { getCookie } from "./Cookie";
 
 function App() {
+
+  const dispatch = useDispatch();
+  const is_login = getCookie('is_login') ? true:false;
+
+  React.useEffect(() => {
+    if(is_login){
+      dispatch(userActions.loginCheck());
+    }
+  }, [])
+
   return (
     <ConnectedRouter history={history}>
       <Header />

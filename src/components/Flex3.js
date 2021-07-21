@@ -3,29 +3,33 @@ import styled from "styled-components";
 import { Image } from "../elements/index";
 
 const Flex3 = (props) => {
-  const arr1 = props.data.filter((post, idx) => idx % 3 === 0);
-  const arr2 = props.data.filter((post, idx) => idx % 3 === 1);
-  const arr3 = props.data.filter((post, idx) => idx % 3 === 2);
+  React.useEffect(() => {
+    console.log(props)
+  },[]);
+
+  const arr1 = props.post_list.filter((post, idx) => idx % 3 === 0);
+  const arr2 = props.post_list.filter((post, idx) => idx % 3 === 1);
+  const arr3 = props.post_list.filter((post, idx) => idx % 3 === 2);
   return (
     <GridWrap>
       <Columns>
         {arr1.map((post) => (
           <GifList key={post.id}>
-            <Image shape="card" src={post.src} size='25'></Image>
+            <Image shape="card" src={post.image_url} size='25'></Image>
           </GifList>
         ))}
       </Columns>
       <Columns>
         {arr2.map((post) => (
           <GifList key={post.id}>
-            <Image shape="card" src={post.src} size='25'></Image>
+            <Image shape="card" src={post.image_url} size='25'></Image>
           </GifList>
         ))}
       </Columns>
       <Columns>
         {arr3.map((post) => (
           <GifList key={post.id}>
-            <Image shape="card" src={post.src} size='25'></Image>
+            <Image shape="card" src={post.image_url} size='25'></Image>
           </GifList>
         ))}
       </Columns>
