@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import React from "react";
+import { Text } from ".";
 
 const Image = (props) => {
-  const { shape, src, size, radius, _onClick, cursor } = props;
+  const { shape, src, size, radius, _onClick, cursor, title } = props;
 
   const styles = {
     src: src,
@@ -32,9 +33,14 @@ const Image = (props) => {
 
   if (shape === "card") {
     return (
-      <CardImages >
-        <CardImage {...styles} onClick={_onClick}></CardImage>
-      </CardImages>
+      <Hover>
+        <CardImages>
+          <CardImage {...styles} onClick={_onClick}></CardImage>
+          <figcaption style={{ position: "relative", top: -36 }}>
+            <Text margin='0' size='1.7rem' bold='600' color='#fff'><i># {title}</i></Text>
+          </figcaption>
+        </CardImages>
+      </Hover>
     );
   }
 
@@ -52,7 +58,34 @@ Image.defaultProps = {
   radius: "",
   _onClick: () => {},
   cursor: "",
+  title: "",
+  height: "",
 };
+
+const Hover = styled.figure`
+  height: 100%;
+  margin: 0;
+  :hover{
+    & figcaption{
+      background-color: rgba(0, 0, 0, 0.7);
+      opacity: 1;
+    }
+  }
+  & figcaption{
+    width: ${(props) => props.size}rem;
+    height: ${(props) => props.height}rem;
+    padding: 7px 2rem;
+    margin: 0;
+    opacity: 0;
+    border-radius: 0%.5rem;
+    :hover{
+      background-color: rgba(0, 0, 0, 0.7);
+      opacity: 1;
+      text-decoration: white underline;
+      text-underline-position: under;
+    }
+  }
+`;
 
 const ImageDefault = styled.div`
   --size: ${(props) => props.size}rem;
@@ -107,18 +140,20 @@ const SwiperImage = styled.div`
 const CardImages = styled.div`
   border-radius: 0.5rem;
   cursor: pointer;
-  box-shadow: 0 4px 10px 0 rgb(0 0 0 / 5%), 0 2px 4px 0 rgb(0 0 0 / 8%);
+  /* box-shadow: 0 4px 10px 0 rgb(0 0 0 / 5%), 0 2px 4px 0 rgb(0 0 0 / 8%); */
   width: auto;
   height: 100%;
-  margin: 1rem 0;
+  margin: 0 auto;
 `;
 
 const CardImage = styled.img`
+  position: relative;
   src: url("${(props) => props.src}");
   alt: initial;
   border-radius: 0.5rem;
   width: ${(props) => props.size}rem;
-
+  border: 1px solid #dfe4ea;
+  box-shadow: 0 4px 10px 0 rgb(0 0 0 / 5%), 0 2px 4px 0 rgb(0 0 0 / 8%);
 `;
 
 const Kakao = styled.div`

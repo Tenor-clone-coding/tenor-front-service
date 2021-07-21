@@ -11,8 +11,8 @@ SwiperCore.use([Navigation]);
 
 const ImageSwiper = (props) => {
   return (
-    <Grid margin="3rem auto">
-      <Grid maxWidth="114rem" margin="3rem auto">
+    <Grid margin="3rem auto 0">
+      <Grid maxWidth="114rem" margin="3rem auto 0">
         <Text width="auto" size="2.5rem" bold="800" margin="0 2rem 3rem">
           Trending Tenor Searches
         </Text>
