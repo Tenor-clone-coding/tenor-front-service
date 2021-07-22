@@ -164,6 +164,7 @@ const Header = (props) => {
 const Container = styled.header`
   max-width: 125rem;
   width: 100%;
+  height: 5.4rem;
   /* width: 130rem; */
   border: 0px solid black;
   display: flex;
@@ -171,6 +172,7 @@ const Container = styled.header`
   margin: 0 auto;
   padding: 5px 5%;
   box-sizing: border-box;
+  align-items: center;
   & * {
     box-sizing: border-box;
   }
@@ -191,15 +193,21 @@ const Button = styled.button`
     border: none;
   }
   &:not(:first-child) {
-    margin-left: 1em;
+    margin-left: 1rem;
+    transition: all 0.1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 8%), 0 4px 6px 0 rgb(83 83 92 / 11%);
+    &:hover {
+      transform: translateY(-1.5px);
+      cursor: pointer;
+    }
   }
-  &:first-child {
+  /* &:first-child {
     display: flex;
     align-items: center;
     padding: 0.5em 1em;
     background-color: #007add;
     color: white;
-  }
+  } */
   & img {
     margin-right: 8px;
     height: 1em;
@@ -222,6 +230,12 @@ const UploadBtn = styled.button`
   padding: 0.5em 1em;
   background-color: #007add;
   color: white;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 8%), 0 4px 6px 0 rgb(83 83 92 / 11%);
+  transition: all 0.1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  &:hover {
+    transform: translateY(-1.5px);
+    cursor: pointer;
+  }
 `;
 
 const ButtonWrap = styled.div`

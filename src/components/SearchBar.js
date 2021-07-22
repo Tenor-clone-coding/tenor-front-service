@@ -1,10 +1,63 @@
+import React from "react";
+import { history } from "../redux/configureStore";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useDetectOutsideClick } from "../elements/useDetectOutsideClick";
+
+import "./search.css";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import logo_white from "../logo_white.svg";
-import { useEffect } from "react";
-import { useState } from "react";
+import { actionCreators as postActions } from "../redux/modules/post";
+import { Text, Grid } from "../elements";
 
 const SearchBar = () => {
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.post.list);
+
+  // 검색기능
+  const [searchTitle, setSearchTitle] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
+
+  const changeSearch = (e) => {
+    const targetWord = e.target.value;
+    setSearchTitle(targetWord);
+    // console.log(e.target);
+    const newFilter = data.filter((value) => {
+      return value.title.toLowerCase().includes(targetWord.toLowerCase());
+    });
+    if (targetWord === "") {
+      setFilteredData([]);
+    } else {
+      setFilteredData(newFilter);
+      setIsActive(!isActive);
+      // console.log(filteredData);
+    }
+  };
+
+  const letSearch = () => {
+    if (searchTitle !== "") {
+      setSearchTitle("");
+      setFilteredData([]);
+      dispatch(postActions.searchPostAX(searchTitle));
+      console.log(searchTitle);
+    } else {
+      window.alert('검색어를 입력해주세요')
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    setSubmitting(true);
+    e.preventDefault();
+  };
+
+  // 메뉴 드롭다운
+  const dropdownRef = React.useRef(null);
+  const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
+  const onClick = () => setIsActive(!isActive);
+
+  // searchBar style
   const [isScrollDown, setIsScrollDown] = useState(false);
 
   const handleScrollDown = (e) => {
@@ -26,12 +79,36 @@ const SearchBar = () => {
         <Span isScrollDown={isScrollDown}>
           <img src={logo_white} alt="logo_basic" />
         </Span>
-        <Form isScrollDown={isScrollDown}>
-          <Input placeholder="Search for GIFs and Stickers"></Input>
-          <Button>
+        <Form isScrollDown={isScrollDown} onSubmit={handleSubmit} noValidate>
+          <Input
+            placeholder="Search for GIFs and Stickers"
+            value={searchTitle}
+            onChange={changeSearch}
+            type="text"
+          ></Input>
+          <Button type="button" onClick={letSearch}>
             <SearchIcon fontSize="large" />
           </Button>
         </Form>
+
+        <nav
+          ref={dropdownRef}
+          className={`menu ${isActive ? "active" : "inactive"}`}
+        >
+          {filteredData.length !== 0 && (
+            <Grid>
+              <ul style={{ listStyle: "none", padding: '0 2rem' }}>
+                {filteredData.slice(0, 10).map((word, idx) => {
+                  return (
+                    <li key={idx}>
+                      <Text size='1.6rem' bold='600'>{word.title}</Text>
+                    </li>
+                  );
+                })}
+              </ul>
+            </Grid>
+          )}
+        </nav>
       </Container>
     </SearchWrap>
   );

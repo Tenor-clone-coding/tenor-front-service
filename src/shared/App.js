@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 
 import Header from "../components/Header";
+import Search from "../pages/Search";
 import { Home, Upload, KakaoRedirection } from "../pages";
 import { getCookie } from "./Cookie";
 
@@ -28,6 +29,7 @@ function App() {
       <Route path="/" exact component={Home} />
       <Route path="/upload" exact component={Upload} />
       <Route path="/user/kakao/callback" exact component={KakaoRedirection} />
+      <Route path='/search/:id' exact component={Search}/>
       <AppDiv></AppDiv>
     </ConnectedRouter>
   );

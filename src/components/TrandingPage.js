@@ -17,23 +17,42 @@ const TrandingPage = (props) => {
       dispatch(postActions.getPostAX());
       console.log(post_list);
     }
+    console.log(props);
+    if (props.search_result) {
+      console.log(props.search_result);
+    }
   }, []);
 
-  return (
-    <Grid margin="0 auto">
-      <Grid margin="3rem auto" maxWidth="114rem">
-        <Text width="30rem" size="2.5rem" bold="800" margin="0 2rem 3rem">
-          Trending GIFs
-        </Text>
+  if (props.search_result) {
+    return (
+      <Grid margin="0 auto">
+        <Grid margin="3rem auto" maxWidth="114rem">
+          <Text width="30rem" size="2.5rem" bold="800" margin="0 4rem 3rem">
+            {props.search_title}
+          </Text>
+          {/* props로 post 정보 넘겨주기 */}
+          <Flex4 {...props} post_list={props.search_result}></Flex4>
+          <Flex3 {...props} post_list={props.search_result}></Flex3>
+          <Flex2 {...props} post_list={props.search_result}></Flex2>
+        </Grid>
+      </Grid>
+    );
+  } else {
+    return (
+      <Grid margin="0 auto">
+        <Grid margin="3rem auto" maxWidth="114rem">
+          <Text width="30rem" size="2.5rem" bold="800" margin="0 2rem 3rem">
+            Trending GIFs
+          </Text>
           {/* props로 post 정보 넘겨주기 */}
           <Flex4 {...props} post_list={post_list}></Flex4>
           <Flex3 {...props} post_list={post_list}></Flex3>
           <Flex2 {...props} post_list={post_list}></Flex2>
+        </Grid>
       </Grid>
-    </Grid>
-  );
+    );
+  }
 };
-
 
 TrandingPage.defaultProps = {
   data: [
