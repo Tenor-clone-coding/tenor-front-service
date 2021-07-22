@@ -76,35 +76,29 @@ const getUserAX = () => {
 
 const kakaoLogin = (code) => {
   return function (dispatch, getState, { history }) {
+    console.log('test');
     axios({
       method: "GET",
 
       //   url 수정 필요함 (?code 앞은 서버주소)
       url: `http://34.64.109.170:8080/user/kakao/callback?code=${code}`,
+    })
+    .then((res) => {
+      console.log(res); // 토큰이 넘어올 것임
+      const ACCESS_TOKEN = res.data.token;
+
+      const save_token = sessionStorage.setItem("token", ACCESS_TOKEN);
+
+      save_token.then(() => {
+        axios.get('')
+      }).catch();
+      
+    })
+    .catch((err) => {
+      console.log("소셜로그인 에러", err);
+      window.alert("로그인에 실패하였습니다.");
+      history.replace("/login"); // 로그인 실패하면 로그인화면으로 돌려보냄
     });
-    // .then((res) => {
-    //   console.log(res); // 토큰이 넘어올 것임
-    //   console.log(res.data);
-
-    //   const ACCESS_TOKEN = res.data.accessToken;
-
-    //   sessionStorage.setItem("token", ACCESS_TOKEN);
-
-    //   dispatch(
-    //     setUser({
-    //       user_id: res.user_id,
-    //       user_email: res.user_email,
-    //       user_nickname: res.user_nickname,
-    //     })
-    //   );
-    //   // history.replace("/");
-    //   window.alert(`${res.user_nickname}님 환영합니다!`);
-    // })
-    // .catch((err) => {
-    //   console.log("소셜로그인 에러", err);
-    //   window.alert("로그인에 실패하였습니다.");
-    //   history.replace("/login"); // 로그인 실패하면 로그인화면으로 돌려보냄
-    // });
   };
 };
 
