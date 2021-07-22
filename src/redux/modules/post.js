@@ -6,14 +6,19 @@ import axios from "axios";
 // Action
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
+const SEARCH_POST = "SEARCH_POST";
 
 // Action Creator
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
+const searchPost = createAction(SEARCH_POST, (search_result) => ({
+  search_result,
+}));
 
 // InitialState
 const initialState = {
   list: [],
+  search_list: [],
 };
 
 // middleware
@@ -69,7 +74,6 @@ const addPostAX = (post) => {
 
 const getPostAX = () => {
   return function (dispatch, getState, { history }) {
-
     const user = getState().user.user;
     const user_info = {
       user_id: 1,
@@ -78,9 +82,8 @@ const getPostAX = () => {
     };
 
     axios
-      .get("http://localhost:4000/photos")
-      // .get("http://34.64.109.170:8080/api/photos")
-      
+      // .get("http://localhost:4000/photos")
+      .get("http://34.64.109.170:8080/api/photos")
 
       .then((res) => {
         console.log(res);
@@ -99,7 +102,38 @@ const getPostAX = () => {
         dispatch(setPost(post_list));
       })
       .catch((e) => {
-        console.log('불러오기 에러', e);
+        console.log("불러오기 에러", e);
+      });
+  };
+};
+
+const searchPostAX = (searchTitle) => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .get(`http://34.64.109.170:8080/api/search?words=${searchTitle}`)
+      .then((res) => {
+        let search_result = [];
+
+        if (res.data.length === 0) {
+          window.alert("찾으시는 이미지가 없습니다");
+          history.replace("/");
+          return;
+        } else {
+          res.data.forEach((_item) => {
+            let search_item = {
+              post_id: _item.id,
+              title: _item.title,
+              image_url: `${config}/image/${_item.fname}`,
+            };
+            search_result.push(search_item);
+          });
+          dispatch(searchPost(search_result));
+          history.push(`/search/${searchTitle}`)
+          console.log(search_result);
+        }
+      })
+      .catch((e) => {
+        console.log("검색 결과 찾기 에러", e);
       });
   };
 };
@@ -107,22 +141,33 @@ const getPostAX = () => {
 // Reducer
 export default handleActions(
   {
-    [SET_POST]: (state, action) => produce(state, (draft) => {
-      draft.list.push(...action.payload.post_list);
+    [SET_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list.push(...action.payload.post_list);
 
-      // draft.list = draft.list.reduce((acc, cur) => {
-      //   if (acc.findIndex((a) => a.id === cur.id) === -1) {
-      //     return [...acc, cur];
-      //   } else {
-      //     acc[acc.findIndex((a) => a.id === cur.id)] = cur;
-      //     return acc;
-      //   }
-      // }, []);
-    }),
+        // draft.list = draft.list.reduce((acc, cur) => {
+        //   if (acc.findIndex((a) => a.id === cur.id) === -1) {
+        //     return [...acc, cur];
+        //   } else {
+        //     acc[acc.findIndex((a) => a.id === cur.id)] = cur;
+        //     return acc;
+        //   }
+        // }, []);
+      }),
 
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
+      }),
+
+    [SEARCH_POST]: (state, action) =>
+      produce(state, (draft) => {
+        if (draft.search_list.length === 0) {
+          draft.search_list.push(...action.payload.search_result);
+        } else {
+          draft.search_list = [];
+          draft.search_list.push(...action.payload.search_result);
+        }
       }),
   },
   initialState
@@ -133,6 +178,7 @@ const actionCreators = {
   addPost,
   addPostAX,
   getPostAX,
+  searchPostAX,
 };
 
 export { actionCreators };

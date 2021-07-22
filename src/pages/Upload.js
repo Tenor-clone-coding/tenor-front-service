@@ -72,7 +72,6 @@ const Upload = (props) => {
       image: files[0],
     };
     console.log(post);
-    window.alert("업로드");
     dispatch(postActions.addPostAX(post));
   };
 
