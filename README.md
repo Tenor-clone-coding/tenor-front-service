@@ -9,6 +9,7 @@
 ## Tenor 소개
 
 - Tenor는 온라인 GIF 검색 엔진 및 데이터베이스입니다.
+- 프로젝트 주소 : http://tenor-test1.s3-website.ap-northeast-2.amazonaws.com/
 
 ![메인페이지](http://drive.google.com/uc?export=view&id=1tVLOR02iKlzo7JVV89zdG_AHdZG6d1AA)
 
