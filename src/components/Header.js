@@ -3,6 +3,9 @@ import styled from "styled-components";
 import "./styles.css";
 import { useDetectOutsideClick } from "../elements/useDetectOutsideClick";
 import { history } from "../redux/configureStore";
+import { useSelector, useDispatch } from "react-redux";
+import { axiosInfo } from "../shared/API";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 import logo_basic from "../logo_basic.svg";
 import upload_icon from "../upload_icon.svg";
@@ -12,6 +15,11 @@ import Modal from "./Modal";
 import { Grid, Text } from "../elements";
 
 const Header = (props) => {
+  const dispatch = useDispatch();
+  // 로그인 확인
+  const user_info = useSelector((state) => state.user.user);
+
+
   // login 모달
   const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -23,142 +31,277 @@ const Header = (props) => {
     setModalVisible(false);
   };
 
+  const deleteBtn = () => {
+    dispatch(userActions.logOut());
+    window.alert('로그아웃 되었습니다');
+    window.location.reload('/');
+  }
+  
+
   // 메뉴 드롭다운
   const dropdownRef = React.useRef(null);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const onClick = () => setIsActive(!isActive);
 
-  return (
-    <Container>
-      <Span>
-        <img
-          src={logo_basic}
-          alt="tenor"
-          style={{ cursor: "pointer" }}
-          onClick={() => {
-            history.replace("/");
-          }}
-        />
-      </Span>
-      <ButtonWrap>
-        <UploadBtn
-          onClick={() => {
-            history.push("/upload");
-          }}
-        >
-          <img src={upload_icon} alt="tenor" />
-          Upload
-        </UploadBtn>
-        <>
-          <Button onClick={openModal}>Sign in</Button>
-          {modalVisible && (
-            <Modal
-              visible={modalVisible}
-              closable={true}
-              maskClosable={true}
-              onClose={closeModal}
-            ></Modal>
-          )}
-        </>
-        <div className="menu-container">
-          <button
-            style={{
-              backgroundColor: "#fff",
-              border: "none",
-              marginLeft: "0.5rem",
+  if(axiosInfo.token){
+    return (
+      <Container>
+        <Span>
+          <img
+            src={logo_basic}
+            alt="tenor"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              history.replace("/");
             }}
-            onClick={onClick}
+          />
+        </Span>
+        <ButtonWrap>
+          <UploadBtn
+            onClick={() => {
+              history.push("/upload");
+            }}
           >
-            <MenuIcon fontSize="large" />
-          </button>
+            <img src={upload_icon} alt="tenor" />
+            Upload
+          </UploadBtn>
+          <Button onClick={deleteBtn}>LogOut</Button>
+          <Text margin='0 1rem'>
+            {user_info?.user_nickname}님
+          </Text>
+          <div className="menu-container">
+            <button
+              style={{
+                backgroundColor: "#fff",
+                border: "none",
+                marginLeft: "0.5rem",
+              }}
+              onClick={onClick}
+            >
+              <MenuIcon fontSize="large" />
+            </button>
+  
+            <nav
+              ref={dropdownRef}
+              className={`menu ${isActive ? "active" : "inactive"}`}
+            >
+              <Grid maxWidth="110rem" is_flex="t" padding="5rem 9rem">
+                <Div>
+                  <Text size="2rem" bold="600" margin="0">
+                    PRODUCTS
+                  </Text>
+                  <ul style={{ listStyle: "none", padding: 0 }}>
+                    <li>
+                      <Text size="1.6rem">GIF keyboard</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Android</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Mac</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Content Partners</Text>
+                    </li>
+                  </ul>
+                </Div>
+                <Div>
+                  <Text size="2rem" bold="600" margin="0">
+                    EXPLORE
+                  </Text>
+                  <ul style={{ listStyle: "none", padding: 0 }}>
+                    <li>
+                      <Text size="1.6rem">Reaction GIFs</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Explore GIFs</Text>
+                    </li>
+                  </ul>
+                </Div>
+                <Div>
+                  <Text size="2rem" bold="600" margin="0">
+                    COMPANY
+                  </Text>
+                  <ul style={{ listStyle: "none", padding: 0 }}>
+                    <li>
+                      <Text size="1.6rem">About</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Press</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Blog</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">FAQ</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Terms and Privacy</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Website Licenses</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Contact Us</Text>
+                    </li>
+                  </ul>
+                </Div>
+                <Div>
+                  <Text size="2rem" bold="600" margin="0">
+                    API
+                  </Text>
+                  <ul style={{ listStyle: "none", padding: 0 }}>
+                    <li>
+                      <Text size="1.6rem">Tenor GIF API</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">GIF API Documentation</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Unity AR SDK</Text>
+                    </li>
+                  </ul>
+                </Div>
+              </Grid>
+            </nav>
+          </div>
+        </ButtonWrap>
+      </Container>
+    );
+  } else {
 
-          <nav
-            ref={dropdownRef}
-            className={`menu ${isActive ? "active" : "inactive"}`}
+    return (
+      <Container>
+        <Span>
+          <img
+            src={logo_basic}
+            alt="tenor"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              history.replace("/");
+            }}
+          />
+        </Span>
+        <ButtonWrap>
+          <UploadBtn
+            onClick={() => {
+              history.push("/upload");
+            }}
           >
-            <Grid maxWidth="110rem" is_flex="t" padding="5rem 9rem">
-              <Div>
-                <Text size="2rem" bold="600" margin="0">
-                  PRODUCTS
-                </Text>
-                <ul style={{ listStyle: "none", padding: 0 }}>
-                  <li>
-                    <Text size="1.6rem">GIF keyboard</Text>
-                  </li>
-                  <li>
-                    <Text size="1.6rem">Android</Text>
-                  </li>
-                  <li>
-                    <Text size="1.6rem">Mac</Text>
-                  </li>
-                  <li>
-                    <Text size="1.6rem">Content Partners</Text>
-                  </li>
-                </ul>
-              </Div>
-              <Div>
-                <Text size="2rem" bold="600" margin="0">
-                  EXPLORE
-                </Text>
-                <ul style={{ listStyle: "none", padding: 0 }}>
-                  <li>
-                    <Text size="1.6rem">Reaction GIFs</Text>
-                  </li>
-                  <li>
-                    <Text size="1.6rem">Explore GIFs</Text>
-                  </li>
-                </ul>
-              </Div>
-              <Div>
-                <Text size="2rem" bold="600" margin="0">
-                  COMPANY
-                </Text>
-                <ul style={{ listStyle: "none", padding: 0 }}>
-                  <li>
-                    <Text size="1.6rem">About</Text>
-                  </li>
-                  <li>
-                    <Text size="1.6rem">Press</Text>
-                  </li>
-                  <li>
-                    <Text size="1.6rem">Blog</Text>
-                  </li>
-                  <li>
-                    <Text size="1.6rem">FAQ</Text>
-                  </li>
-                  <li>
-                    <Text size="1.6rem">Terms and Privacy</Text>
-                  </li>
-                  <li>
-                    <Text size="1.6rem">Website Licenses</Text>
-                  </li>
-                  <li>
-                    <Text size="1.6rem">Contact Us</Text>
-                  </li>
-                </ul>
-              </Div>
-              <Div>
-                <Text size="2rem" bold="600" margin="0">
-                  API
-                </Text>
-                <ul style={{ listStyle: "none", padding: 0 }}>
-                  <li>
-                    <Text size="1.6rem">Tenor GIF API</Text>
-                  </li>
-                  <li>
-                    <Text size="1.6rem">GIF API Documentation</Text>
-                  </li>
-                  <li>
-                    <Text size="1.6rem">Unity AR SDK</Text>
-                  </li>
-                </ul>
-              </Div>
-            </Grid>
-          </nav>
-        </div>
-      </ButtonWrap>
-    </Container>
-  );
+            <img src={upload_icon} alt="tenor" />
+            Upload
+          </UploadBtn>
+          <>
+            <Button onClick={openModal}>Sign in</Button>
+            {modalVisible && (
+              <Modal
+                visible={modalVisible}
+                closable={true}
+                maskClosable={true}
+                onClose={closeModal}
+              ></Modal>
+            )}
+          </>
+          <div className="menu-container">
+            <button
+              style={{
+                backgroundColor: "#fff",
+                border: "none",
+                marginLeft: "0.5rem",
+              }}
+              onClick={onClick}
+            >
+              <MenuIcon fontSize="large" />
+            </button>
+  
+            <nav
+              ref={dropdownRef}
+              className={`menu ${isActive ? "active" : "inactive"}`}
+            >
+              <Grid maxWidth="110rem" is_flex="t" padding="5rem 9rem">
+                <Div>
+                  <Text size="2rem" bold="600" margin="0">
+                    PRODUCTS
+                  </Text>
+                  <ul style={{ listStyle: "none", padding: 0 }}>
+                    <li>
+                      <Text size="1.6rem">GIF keyboard</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Android</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Mac</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Content Partners</Text>
+                    </li>
+                  </ul>
+                </Div>
+                <Div>
+                  <Text size="2rem" bold="600" margin="0">
+                    EXPLORE
+                  </Text>
+                  <ul style={{ listStyle: "none", padding: 0 }}>
+                    <li>
+                      <Text size="1.6rem">Reaction GIFs</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Explore GIFs</Text>
+                    </li>
+                  </ul>
+                </Div>
+                <Div>
+                  <Text size="2rem" bold="600" margin="0">
+                    COMPANY
+                  </Text>
+                  <ul style={{ listStyle: "none", padding: 0 }}>
+                    <li>
+                      <Text size="1.6rem">About</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Press</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Blog</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">FAQ</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Terms and Privacy</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Website Licenses</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Contact Us</Text>
+                    </li>
+                  </ul>
+                </Div>
+                <Div>
+                  <Text size="2rem" bold="600" margin="0">
+                    API
+                  </Text>
+                  <ul style={{ listStyle: "none", padding: 0 }}>
+                    <li>
+                      <Text size="1.6rem">Tenor GIF API</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">GIF API Documentation</Text>
+                    </li>
+                    <li>
+                      <Text size="1.6rem">Unity AR SDK</Text>
+                    </li>
+                  </ul>
+                </Div>
+              </Grid>
+            </nav>
+          </div>
+        </ButtonWrap>
+      </Container>
+    );
+  }
 };
 
 const Container = styled.header`

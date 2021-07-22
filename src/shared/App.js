@@ -6,16 +6,16 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configureStore";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { axiosInfo } from "./API";
 
 import Header from "../components/Header";
 import Search from "../pages/Search";
 import { Home, Upload, KakaoRedirection } from "../pages";
-import { getCookie } from "./Cookie";
 
 function App() {
 
   const dispatch = useDispatch();
-  const is_login = getCookie('is_login') ? true:false;
+  const is_login = axiosInfo.token? true : false;
 
   React.useEffect(() => {
     if(is_login){
