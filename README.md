@@ -33,7 +33,7 @@
 
 *   ##### **깃허브 주소**
 
-    [프론트엔드 깃허브](https://github.com/Tenor-clone-coding/tenor-front-service)
+    [프론트엔드 깃허브](https://github.com/Tenor-clone-coding/tenor-front-service) (develop branch)
 
     [백엔드 깃허브](https://github.com/Tenor-clone-coding/tenor-backend-service-)
 
