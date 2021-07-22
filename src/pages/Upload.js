@@ -129,8 +129,9 @@ const Upload = (props) => {
                         bg="#48abfb"
                         padding="1rem"
                         radius="30px"
-                        width="15rem"
+                        width="12rem"
                         height="5rem"
+                        margin="-0.5rem"
                         _onClick={addPost}
                       >
                         <Text color="#fff" margin="0" size="1.8rem" bold="600">
@@ -357,6 +358,13 @@ const UploadBtn = styled.button`
   color: #ffffff;
   border-radius: 30px;
   cursor: pointer;
+  background: linear-gradient(90deg, #4cafff, #2e93e6);
+  background-image: linear-gradient(
+    90deg,
+    rgb(76, 175, 255),
+    rgb(46, 147, 230)
+  );
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 8%), 0 4px 6px 0 rgb(83 83 92 / 11%);
 `;
 
 const InputBox = styled.input`

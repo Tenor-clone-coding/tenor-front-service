@@ -7,6 +7,7 @@ import axios from "axios";
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
 const SEARCH_POST = "SEARCH_POST";
+// const DELETE_POST = "DELETE_POST";
 
 // Action Creator
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
@@ -14,6 +15,7 @@ const addPost = createAction(ADD_POST, (post) => ({ post }));
 const searchPost = createAction(SEARCH_POST, (search_result) => ({
   search_result,
 }));
+// const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 
 // InitialState
 const initialState = {
@@ -82,7 +84,6 @@ const getPostAX = () => {
     };
 
     axios
-      // .get("http://localhost:4000/photos")
       .get("http://34.64.109.170:8080/api/photos")
 
       .then((res) => {
@@ -128,7 +129,7 @@ const searchPostAX = (searchTitle) => {
             search_result.push(search_item);
           });
           dispatch(searchPost(search_result));
-          history.push(`/search/${searchTitle}`)
+          history.push(`/search/${searchTitle}`);
           console.log(search_result);
         }
       })
@@ -137,6 +138,22 @@ const searchPostAX = (searchTitle) => {
       });
   };
 };
+
+// const deletePostAX = (post_id) => {
+//   return function (dispatch, getState, { history }) {
+//     console.log(post_id);
+//     axios
+//       .delete(`http://52.79.137.166/api/photos/${post_id}`)
+//       .then((res) => {
+//         dispatch(deletePost(post_id));
+//         window.alert("DELETE");
+//         history.replace("/");
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   };
+// };
 
 // Reducer
 export default handleActions(
@@ -169,6 +186,14 @@ export default handleActions(
           draft.search_list.push(...action.payload.search_result);
         }
       }),
+
+    // [DELETE_POST]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+    //     if (idx !== -1) {
+    //       draft.list.splice(idx, 1);
+    //     }
+    //   }),
   },
   initialState
 );
@@ -179,6 +204,7 @@ const actionCreators = {
   addPostAX,
   getPostAX,
   searchPostAX,
+  // deletePostAX,
 };
 
 export { actionCreators };
