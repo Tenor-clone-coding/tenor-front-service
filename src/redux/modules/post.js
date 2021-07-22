@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { config } from "../../shared/API";
+import { axiosInfo } from "../../shared/API";
 import axios from "axios";
 
 // Action
@@ -65,7 +65,7 @@ const addPostAX = (post) => {
           ...user_info,
           post_id: res.data.id,
           title: res.data.title,
-          image_url: `${config}/image/${res.data.fname}`,
+          image_url: `${axiosInfo.config}/image/${res.data.fname}`,
           // user_id: res.data.user_id,
         };
         dispatch(addPost(post));
@@ -99,7 +99,7 @@ const getPostAX = () => {
           let post = {
             ...user_info,
             post_id: _post.id,
-            image_url: `${config}/image/${_post.fname}`,
+            image_url: `${axiosInfo.config}/image/${_post.fname}`,
             title: _post.title,
           };
           post_list.push(post);
@@ -128,7 +128,7 @@ const searchPostAX = (searchTitle) => {
             let search_item = {
               post_id: _item.id,
               title: _item.title,
-              image_url: `${config}/image/${_item.fname}`,
+              image_url: `${axiosInfo.config}/image/${_item.fname}`,
             };
             search_result.push(search_item);
           });

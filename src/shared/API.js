@@ -10,6 +10,18 @@ const API = axios.create({
 } );
 
 // api 주소만 사용할때 ${config} 로 사용
-export const config = 'http://34.64.109.170:8080'
+const config = 'http://34.64.109.170:8080'
+const token = sessionStorage.getItem('token');
+
+const header = {
+    "X-AUTH-TOKEN": `${token}`
+}
+
+const axiosInfo = {
+    config,
+    token,
+    header,
+}
+export {axiosInfo};
 
 export default API;

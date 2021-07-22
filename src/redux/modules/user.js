@@ -3,7 +3,7 @@ import { produce } from "immer";
 
 import { Kakao_auth_url } from "../../shared/OAuth";
 import { setCookie, deleteCookie } from "../../shared/Cookie";
-import { config } from "../../shared/API";
+import { axiosInfo } from "../../shared/API";
 import axios from "axios";
 
 // Action
@@ -76,29 +76,53 @@ const getUserAX = () => {
 
 const kakaoLogin = (code) => {
   return function (dispatch, getState, { history }) {
-    console.log('test');
+    console.log("test");
     axios({
       method: "GET",
 
       //   url 수정 필요함 (?code 앞은 서버주소)
       url: `http://34.64.109.170:8080/user/kakao/callback?code=${code}`,
     })
-    .then((res) => {
-      console.log(res); // 토큰이 넘어올 것임
-      const ACCESS_TOKEN = res.data.token;
+      .then((res) => {
+        console.log(res); // 토큰이 넘어올 것임
+        const ACCESS_TOKEN = res.data.token;
 
-      const save_token = sessionStorage.setItem("token", ACCESS_TOKEN);
+        sessionStorage.setItem("token", ACCESS_TOKEN);
 
-      save_token.then(() => {
-        axios.get('')
-      }).catch();
-      
-    })
-    .catch((err) => {
-      console.log("소셜로그인 에러", err);
-      window.alert("로그인에 실패하였습니다.");
-      history.replace("/login"); // 로그인 실패하면 로그인화면으로 돌려보냄
-    });
+        const token = sessionStorage.getItem('token');
+
+        const header = {
+          "X-AUTH-TOKEN": `${token}`,
+        };
+
+        axios
+          .get("http://34.64.109.170:8080/user/info", {
+            headers: header,
+          })
+          .then((res) => {
+            console.log(res);
+            dispatch(
+              setUser({
+                is_login: res.data.res,
+                user_id: res.data.user_id,
+                user_email: res.data.user_email,
+                user_nickname: res.data.user_nickname,
+              })
+            );
+
+            window.alert(`${res.data.user_nickname}님 환영합니다.`);
+            // history.replace('/');
+            window.location.replace('/');
+          })
+          .catch((e) => {
+            console.log("user 정보 조회 에러", e);
+          });
+      })
+      .catch((err) => {
+        console.log("소셜로그인 에러", err);
+        window.alert("로그인에 실패하였습니다.");
+        history.replace("/login"); // 로그인 실패하면 로그인화면으로 돌려보냄
+      });
   };
 };
 
@@ -106,20 +130,23 @@ const loginCheck = () => {
   return function (dispatch, getState, { history }) {
     const token = sessionStorage.getItem("token");
     if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      const header = {
+        "X-AUTH-TOKEN": `${token}`,
+      };
       axios
-        .get("http://34.64.109.170:8080/user/info")
+        .get("http://34.64.109.170:8080/user/info", { headers: header })
         .then((res) => {
           if (res.data.res) {
             dispatch(
               setUser({
+                is_login: res.data.res,
                 user_id: res.data.user_id,
                 user_email: res.data.user_email,
                 user_nickname: res.data.user_nickname,
               })
             );
           } else {
-            dispatch(logOut())
+            dispatch(logOut());
           }
         })
         .catch((e) => {
@@ -141,6 +168,7 @@ export default handleActions(
       }),
     [LOGOUT]: (state, action) =>
       produce(state, (draft) => {
+        sessionStorage.removeItem('token');
         deleteCookie("is_login");
         draft.user = null;
         draft.is_login = false;
