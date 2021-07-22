@@ -1,4 +1,4 @@
-## Tenor 클론코딩 백엔드
+## Tenor 클론코딩
 
 1.  [Tenor-소개 ](#tenor-소개)
 
@@ -11,7 +11,7 @@
 
 - Tenor는 온라인 GIF 검색 엔진 및 데이터베이스입니다.
 
-![메인페이지](http://drive.google.com/uc?export=view&id=1dBBg2M2ujRSEPRuiDhiQSVLQdr3PLWzf)
+![메인페이지](http://drive.google.com/uc?export=view&id=1tVLOR02iKlzo7JVV89zdG_AHdZG6d1AA)
 
 
 
