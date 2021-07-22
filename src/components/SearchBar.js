@@ -116,7 +116,7 @@ const SearchBar = () => {
 
         <nav
           ref={dropdownRef}
-          className={`menu ${isActive ? "active" : "inactive"}`}
+          className={`search ${isActive ? "active" : "inactive"}`}
         >
           {filteredData.length !== 0 ? (
             <Grid>
