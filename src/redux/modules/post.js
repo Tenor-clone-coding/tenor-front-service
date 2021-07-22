@@ -8,6 +8,8 @@ const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
 const SEARCH_POST = "SEARCH_POST";
 const RECENT_WORD = "RECENT_WORD";
+// const DELETE_POST = "DELETE_POST";
+
 
 // Action Creator
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
@@ -16,6 +18,7 @@ const searchPost = createAction(SEARCH_POST, (search_result) => ({
   search_result,
 }));
 const recentWord = createAction(RECENT_WORD, (word_list) => ({ word_list }));
+// const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 
 // InitialState
 const initialState = {
@@ -85,7 +88,6 @@ const getPostAX = () => {
     };
 
     axios
-      // .get("http://localhost:4000/photos")
       .get("http://34.64.109.170:8080/api/photos")
 
       .then((res) => {
@@ -162,6 +164,23 @@ const recentWordAX = () => {
   };
 };
 
+// const deletePostAX = (post_id) => {
+//   return function (dispatch, getState, { history }) {
+//     console.log(post_id);
+//     axios
+//       .delete(`http://52.79.137.166/api/photos/${post_id}`)
+//       .then((res) => {
+//         dispatch(deletePost(post_id));
+//         window.alert("DELETE");
+//         history.replace("/");
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   };
+// };
+
+
 // Reducer
 export default handleActions(
   {
@@ -202,6 +221,14 @@ export default handleActions(
           draft.recent_word.push(...action.payload.word_list);
         }
       }),
+    
+// [DELETE_POST]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+    //     if (idx !== -1) {
+    //       draft.list.splice(idx, 1);
+    //     }
+    //   }),
   },
   initialState
 );
@@ -213,6 +240,7 @@ const actionCreators = {
   getPostAX,
   searchPostAX,
   recentWordAX,
+  // deletePostAX,
 };
 
 export { actionCreators };

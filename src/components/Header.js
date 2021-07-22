@@ -201,13 +201,6 @@ const Button = styled.button`
       cursor: pointer;
     }
   }
-  /* &:first-child {
-    display: flex;
-    align-items: center;
-    padding: 0.5em 1em;
-    background-color: #007add;
-    color: white;
-  } */
   & img {
     margin-right: 8px;
     height: 1em;
