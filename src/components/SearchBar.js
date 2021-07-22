@@ -14,15 +14,17 @@ import { Text, Grid } from "../elements";
 const SearchBar = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.post.list);
+  const recent_word = useSelector((state) => state.post.recent_word);
 
   // 검색기능
   const [searchTitle, setSearchTitle] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  const [submitting, setSubmitting] = useState(false);
+  const [checkRecent, setCheckRecent] = useState(false);
 
   const changeSearch = (e) => {
     const targetWord = e.target.value;
     setSearchTitle(targetWord);
+    setCheckRecent(false);
     // console.log(e.target);
     const newFilter = data.filter((value) => {
       return value.title.toLowerCase().includes(targetWord.toLowerCase());
@@ -36,6 +38,16 @@ const SearchBar = () => {
     }
   };
 
+  const changeText = (text) => {
+    setSearchTitle(text);
+  };
+
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      letSearch();
+    }
+  };
+
   const letSearch = () => {
     if (searchTitle !== "") {
       setSearchTitle("");
@@ -43,12 +55,20 @@ const SearchBar = () => {
       dispatch(postActions.searchPostAX(searchTitle));
       console.log(searchTitle);
     } else {
-      window.alert('검색어를 입력해주세요')
+      window.alert("검색어를 입력해주세요");
+    }
+  };
+
+  const recentKeyword = () => {
+    console.log(searchTitle);
+    console.log(checkRecent);
+    if (searchTitle === "") {
+      setCheckRecent(true);
+      setIsActive(true);
     }
   };
 
   const handleSubmit = async (e) => {
-    setSubmitting(true);
     e.preventDefault();
   };
 
@@ -69,6 +89,7 @@ const SearchBar = () => {
   };
 
   useEffect(() => {
+    dispatch(postActions.recentWordAX());
     window.addEventListener("scroll", handleScrollDown);
     return () => window.removeEventListener("scroll", handleScrollDown);
   }, []);
@@ -81,10 +102,12 @@ const SearchBar = () => {
         </Span>
         <Form isScrollDown={isScrollDown} onSubmit={handleSubmit} noValidate>
           <Input
+            onClick={recentKeyword}
             placeholder="Search for GIFs and Stickers"
             value={searchTitle}
             onChange={changeSearch}
             type="text"
+            onKeyPress={onKeyPress}
           ></Input>
           <Button type="button" onClick={letSearch}>
             <SearchIcon fontSize="large" />
@@ -95,14 +118,40 @@ const SearchBar = () => {
           ref={dropdownRef}
           className={`menu ${isActive ? "active" : "inactive"}`}
         >
-          {filteredData.length !== 0 && (
+          {filteredData.length !== 0 ? (
             <Grid>
-              <ul style={{ listStyle: "none", padding: '0 2rem' }}>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                 {filteredData.slice(0, 10).map((word, idx) => {
                   return (
-                    <li key={idx}>
-                      <Text size='1.6rem' bold='600'>{word.title}</Text>
-                    </li>
+                    <LiHover
+                      key={idx}
+                      onClick={() => {
+                        changeText(word.title);
+                      }}
+                    >
+                      <Text size="1.6rem" bold="600" padding="0">
+                        {word.title}
+                      </Text>
+                    </LiHover>
+                  );
+                })}
+              </ul>
+            </Grid>
+          ) : (
+            <Grid>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                {recent_word.map((word, idx) => {
+                  return (
+                    <LiHover
+                      key={idx}
+                      onClick={() => {
+                        changeText(word.keyword);
+                      }}
+                    >
+                      <Text size="1.6rem" bold="600">
+                        {word.keyword}
+                      </Text>
+                    </LiHover>
                   );
                 })}
               </ul>
@@ -113,6 +162,14 @@ const SearchBar = () => {
     </SearchWrap>
   );
 };
+
+const LiHover = styled.li`
+  padding: 1rem 2rem;
+  transition: all 0.3s;
+  :hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+`;
 
 const SearchWrap = styled.div`
   width: 100vw;

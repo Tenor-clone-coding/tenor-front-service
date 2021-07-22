@@ -7,7 +7,9 @@ import axios from "axios";
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
 const SEARCH_POST = "SEARCH_POST";
+const RECENT_WORD = "RECENT_WORD";
 // const DELETE_POST = "DELETE_POST";
+
 
 // Action Creator
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
@@ -15,12 +17,14 @@ const addPost = createAction(ADD_POST, (post) => ({ post }));
 const searchPost = createAction(SEARCH_POST, (search_result) => ({
   search_result,
 }));
+const recentWord = createAction(RECENT_WORD, (word_list) => ({ word_list }));
 // const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 
 // InitialState
 const initialState = {
   list: [],
   search_list: [],
+  recent_word: [],
 };
 
 // middleware
@@ -139,6 +143,27 @@ const searchPostAX = (searchTitle) => {
   };
 };
 
+const recentWordAX = () => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .get("http://34.64.109.170:8080/api/recentKeywords")
+      .then((res) => {
+        let recent_word = [];
+        res.data.forEach((_word) => {
+          let word = {
+            keyword: _word.keyword,
+          };
+          recent_word.push(word);
+        });
+        dispatch(recentWord(recent_word));
+        console.log(recent_word);
+      })
+      .catch((e) => {
+        console.log("최근 검색어 불러오기 실패", e);
+      });
+  };
+};
+
 // const deletePostAX = (post_id) => {
 //   return function (dispatch, getState, { history }) {
 //     console.log(post_id);
@@ -154,6 +179,7 @@ const searchPostAX = (searchTitle) => {
 //       });
 //   };
 // };
+
 
 // Reducer
 export default handleActions(
@@ -186,8 +212,17 @@ export default handleActions(
           draft.search_list.push(...action.payload.search_result);
         }
       }),
-
-    // [DELETE_POST]: (state, action) =>
+    [RECENT_WORD]: (state, action) =>
+      produce(state, (draft) => {
+        if (draft.recent_word.length === 0) {
+          draft.recent_word.push(...action.payload.word_list);
+        } else {
+          draft.recent_word = [];
+          draft.recent_word.push(...action.payload.word_list);
+        }
+      }),
+    
+// [DELETE_POST]: (state, action) =>
     //   produce(state, (draft) => {
     //     let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
     //     if (idx !== -1) {
@@ -204,6 +239,7 @@ const actionCreators = {
   addPostAX,
   getPostAX,
   searchPostAX,
+  recentWordAX,
   // deletePostAX,
 };
 
